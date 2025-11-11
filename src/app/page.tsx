@@ -1,9 +1,14 @@
+'use client';
+
 import styles from "./page.module.css";
 
 import FileUploader from "@/components/FileUploader";
 import Balance from "@/components/Balance";
+import { useSettlementData } from "@/hooks/useSettlementData";
 
 export default function Home() {
+  const { balance, loading, error } = useSettlementData();
+
   return (
     <main className={styles.main}>
       <header className={styles.header}>
@@ -16,8 +21,15 @@ export default function Home() {
         <div className={styles.topSection}>
           <FileUploader />
 
-          <Balance />
+          <Balance balance={balance} loading={loading} />
         </div>
+
+        {error && (
+          <div className={styles.error}>
+            Error loading data: {error}
+          </div>
+        )}
+        
       </div>
     </main>
   );
