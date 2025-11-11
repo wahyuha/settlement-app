@@ -4,16 +4,18 @@ import styles from "./page.module.css";
 
 import FileUploader from "@/components/FileUploader";
 import Balance from "@/components/Balance";
+import TransactionTable from "@/components/TransactionTable";
 import { useSettlementData } from "@/hooks/useSettlementData";
 import { useFileUpload } from "@/hooks/useFileUpload";
 
 export default function Home() {
-  const { balance, loading, error } = useSettlementData();
+  const { balance, issues, loading, refetch: refetchSettlementData, error } = useSettlementData();
   const { uploadFile, uploading, success: uploadSuccess, error: uploadError } = useFileUpload();
 
   const handleFileSelect = async (file: File) => {
     try {
       await uploadFile(file);
+      refetchSettlementData();
     } catch (error) {
       console.error(error);
     }
@@ -50,7 +52,9 @@ export default function Home() {
         </div>
       )}
 
+      <TransactionTable issues={issues} loading={loading} />
       </div>
+
     </main>
   );
 }

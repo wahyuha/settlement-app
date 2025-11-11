@@ -5,3 +5,13 @@ export const formatCurrency = (amount: number): string => {
 		minimumFractionDigits: 0,
 	}).format(amount);
 };
+
+export const formatDate = (timestamp: string): string => {
+	return new Date(timestamp).toLocaleString('id-ID', {
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+	});
+};
