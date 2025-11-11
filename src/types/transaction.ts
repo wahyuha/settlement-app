@@ -5,3 +5,6 @@ export interface BalanceResponse {
     timestamp: string;
   };
 }
+export interface UploadResponse {
+  message: string;
+}

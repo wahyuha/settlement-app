@@ -5,9 +5,19 @@ import styles from "./page.module.css";
 import FileUploader from "@/components/FileUploader";
 import Balance from "@/components/Balance";
 import { useSettlementData } from "@/hooks/useSettlementData";
+import { useFileUpload } from "@/hooks/useFileUpload";
 
 export default function Home() {
   const { balance, loading, error } = useSettlementData();
+  const { uploadFile, uploading, success: uploadSuccess, error: uploadError } = useFileUpload();
+
+  const handleFileSelect = async (file: File) => {
+    try {
+      await uploadFile(file);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <main className={styles.main}>
@@ -19,7 +29,11 @@ export default function Home() {
       {/* Uploader section */}
       <div className={styles.container}>
         <div className={styles.topSection}>
-          <FileUploader />
+          <FileUploader
+            onFileSelect={handleFileSelect}
+            uploading={uploading}
+            success={uploadSuccess}
+            error={uploadError} />
 
           <Balance balance={balance} loading={loading} />
         </div>
@@ -30,6 +44,12 @@ export default function Home() {
           </div>
         )}
         
+      {uploading && (
+        <div className={styles.uploading}>
+          Uploading...
+        </div>
+      )}
+
       </div>
     </main>
   );
