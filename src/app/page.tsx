@@ -9,13 +9,24 @@ import { useSettlementData } from "@/hooks/useSettlementData";
 import { useFileUpload } from "@/hooks/useFileUpload";
 
 export default function Home() {
-  const { balance, issues, loading, refetch: refetchSettlementData, error } = useSettlementData();
+  const { 
+    balance,
+    issues: {
+      items: issuesData,
+      pagination
+    },
+    loading,
+    refetchIssues,
+    refetchBalance,
+    error
+  } = useSettlementData();
   const { uploadFile, uploading, success: uploadSuccess, error: uploadError } = useFileUpload();
 
   const handleFileSelect = async (file: File) => {
     try {
       await uploadFile(file);
-      refetchSettlementData();
+      refetchBalance();
+      refetchIssues();
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +63,11 @@ export default function Home() {
         </div>
       )}
 
-      <TransactionTable issues={issues} loading={loading} />
+      <TransactionTable
+        issues={issuesData}
+        pagination={pagination}
+        loading={loading}
+        onPaginationChange={(page: number, limit: number) => refetchIssues(page, limit)} />
       </div>
 
     </main>

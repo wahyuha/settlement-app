@@ -22,5 +22,11 @@ export interface UploadResponse {
 export interface IssuesResponse {
   data: {
     items: Transaction[];
+    pagination: {
+      page: number;
+      limit: number;
+      totalItems: number;
+      totalPages: number;
+    };
   };
 }

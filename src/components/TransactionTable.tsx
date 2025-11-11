@@ -4,10 +4,17 @@ import { formatCurrency, formatDate } from '@/utils/formatter';
 
 interface TransactionTableProps {
   issues: Transaction[];
+  pagination: {
+    page: number;
+    limit: number;
+    totalItems: number;
+    totalPages: number;
+  };
+  onPaginationChange: (page: number, limit: number) => void;
   loading: boolean;
 }
 
-export default function TransactionTable({ issues, loading }: TransactionTableProps) {
+export default function TransactionTable({ issues, pagination, loading, onPaginationChange }: TransactionTableProps) {
   const handleSort = (field: string) => {
     console.log('sorting', field);
   };
@@ -85,6 +92,30 @@ export default function TransactionTable({ issues, loading }: TransactionTablePr
           </tbody>
         </table>
       </div>
+
+      {pagination.totalPages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            className={styles.paginationButton}
+            onClick={() => onPaginationChange(pagination.page - 1, pagination.limit)}
+            disabled={pagination.page <= 1}
+          >
+            Previous
+          </button>
+
+          <span className={styles.pageInfo}>
+            Page {pagination.page} of {pagination.totalPages}
+          </span>
+
+          <button
+            className={styles.paginationButton}
+            onClick={() => onPaginationChange(pagination.page + 1, pagination.limit)}
+            disabled={pagination.page >= pagination.totalPages}
+          >
+            Next
+          </button>
+        </div>
+      )}
 
     </div>
   );
