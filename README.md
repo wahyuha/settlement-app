@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Instruction
 
-## Getting Started
+## Prerequisites
 
-First, run the development server:
+Before you start, ensure you have:
+
+- **Node.js** (v18.0.0 or higher)
+- **npm** (v9.0.0 or higher)
+
+## Step 1: Clone Repository
+
+```bash
+git clone git@github.com:wahyuha/settlement-app.git
+cd settlement-app
+```
+
+## Step 2: Install Dependencies
+
+```bash
+npm install
+```
+
+This installs all packages listed in `package.json`.
+
+## Step 3: Create Environment File
+
+Create `.env` in the project root:
+
+```env
+NEXT_PUBLIC_API_URL="http://localhost:8080/api/v1/transactions"
+```
+
+
+## Step 5: Running Project
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Architecture
 
-## Learn More
+### Overview
 
-To learn more about Next.js, take a look at the following resources:
+This app uses a **Client-Side Rendered (CSR)** React application with Next.js.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Core Technologies
 
-## Deploy on Vercel
+| Layer | Technology | Note |
+|-------|-----------|-----|
+| **Framework** | React 18 + TypeScript | Type safety, component reusability |
+| **React Framework** | Next.js (CSR) | Server compatibility, routing, image optimization |
+| **State** | Zustand | Lightweight |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Key Design Decisions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Architecture Pattern
+- **Separation of Concerns** 
+	- Logic and presentation are separated using custom hooks and components
+  - Custom hooks handle business logic, data fetching, and state management
+  - Components focus purely on UI rendering and user interactions
+  - To keep maintainability
+
+### Client-Side Rendering (CSR)
+- **Pros:** Faster interactivity, real-time state updates
+- **Cons:** SEO limitations
+
+### Zustand over Context API
+- **Pros:** Easy
+- **Cons:** Limitation usage for SSR
+
+### Performance Considerations
+
+- **Image Optimization** - Next.js Image component with lazy loading
+- **Code Splitting** - Route based code splitting automatically
+
+![[Screenshot 2025-11-11 at 23.33.32.png]]
