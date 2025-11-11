@@ -16,7 +16,7 @@ export interface BalanceResponse {
   };
 }
 export interface UploadResponse {
-  message: string;
+  data: number;
 }
 
 export interface IssuesResponse {

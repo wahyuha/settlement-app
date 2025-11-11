@@ -1,0 +1,105 @@
+.container {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.step {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+}
+
+.stepIndicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.stepCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.stepCircle.pending {
+  background-color: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  color: #64748b;
+}
+
+.stepCircle.in_progress {
+  background-color: #dbeafe;
+  border: 2px solid #3b82f6;
+  color: #3b82f6;
+}
+
+.stepCircle.completed {
+  background-color: #22c55e;
+  border: 2px solid #22c55e;
+  color: #ffffff;
+}
+
+.stepCircle.error {
+  background-color: #ef4444;
+  border: 2px solid #ef4444;
+  color: #ffffff;
+}
+
+.stepNumber {
+  font-size: 1rem;
+}
+
+.stepContent {
+  flex: 1;
+  padding-bottom: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.stepLabel {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.stepDescription {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.stepExtraContent {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background-color: #f8fafc;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.875rem;
+  color: #475569;
+}

@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import FileUploader from "@/components/FileUploader";
 import Balance from "@/components/Balance";
 import TransactionTable from "@/components/TransactionTable";
+import { VerticalStepper } from '@/components/VerticalStepper';
 import { useSettlementData } from "@/hooks/useSettlementData";
 import { useFileUpload } from "@/hooks/useFileUpload";
 
@@ -20,7 +21,13 @@ export default function Home() {
     refetchBalance,
     error
   } = useSettlementData();
-  const { uploadFile, uploading, success: uploadSuccess, error: uploadError } = useFileUpload();
+  const {
+    uploadFile,
+    uploading,
+    success: uploadSuccess,
+    error: uploadError,
+    steps
+  } = useFileUpload();
 
   const handleFileSelect = async (file: File) => {
     try {
@@ -61,6 +68,10 @@ export default function Home() {
         <div className={styles.uploading}>
           Uploading...
         </div>
+      )}
+
+      {uploadSuccess && (
+        <VerticalStepper steps={steps} />
       )}
 
       <TransactionTable

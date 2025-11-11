@@ -13,13 +13,17 @@ export default function FileUploader({ onFileSelect, uploading, success, error }
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
+
 		if (file) {
 			if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
         alert('Please select a CSV file');
+        e.target.value = '';
         return;
       }
 			onFileSelect(file);
 		}
+
+		e.target.value = '';
 	}
 
 	const handleButtonClick = () => {

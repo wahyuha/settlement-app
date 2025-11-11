@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { BalanceResponse, IssuesResponse } from '@/types/transaction';
-
+import { useStepperStore } from '@/stores/stepper';
 interface UseSettlementDataResult {
   balance: number | null;
   issues: IssuesResponse['data'];
@@ -28,6 +28,8 @@ export function useSettlementData(): UseSettlementDataResult {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const { updateStep } = useStepperStore();
+
   const fetchBalance = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -43,13 +45,41 @@ export function useSettlementData(): UseSettlementDataResult {
       setLoading(false);
     }
   }, []);
+
   const fetchIssues = useCallback(async (page?: number, limit?: number) => {
+    // Step 2: Processing complete
+    updateStep(1, {
+      status: 'completed',
+      description: 'Data processed successfully',
+    });
+
+    // Step 3: Fetch issues
+    updateStep(2, {
+      status: 'in_progress',
+      description: 'Fetching transaction issues...',
+    });
+
     setLoading(true);
     setError(null);
 
     try {
       const issuesResponse = await fetch(`${API_BASE_URL}/issues?page=${page}&limit=${limit}`).then(res => res.json() as Promise<IssuesResponse>);
-      setIssues(issuesResponse.data);
+      const issuesData = issuesResponse.data;
+      setIssues(issuesData);
+
+      // Step 3: Issues retrieved
+      updateStep(2, {
+        status: 'completed',
+        description: `${issuesData.items.length ? 'ℹ️ Warning! ' : ''} Found ${issuesData.items.length} issues.`,
+      });
+
+      const failedCount = issuesData.items.filter(issue => issue.status === 'FAILED').length;
+      const pendingCount = issuesData.items.filter(issue => issue.status === 'PENDING').length;
+
+      updateStep(3, {
+        status: 'completed',
+        description: `Settlement completed! Failed: ${failedCount}, Pending: ${pendingCount}`,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error occurred while fetching issues data');
     } finally {
