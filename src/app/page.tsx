@@ -1,6 +1,7 @@
 'use client';
 
 import styles from "./page.module.css";
+import Image from 'next/image';
 
 import FileUploader from "@/components/FileUploader";
 import Balance from "@/components/Balance";
@@ -42,6 +43,13 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <header className={styles.header}>
+        <Image
+          src="/flip-logo.png"
+          alt="Flip Logo"
+          width={120}
+          height={120}
+          priority
+        />
         <h1 className={styles.title}>Settlement Dashboard</h1>
         <p className={styles.subtitle}>Upload CSV files</p>
       </header>
