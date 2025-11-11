@@ -1,5 +1,8 @@
 import styles from "./page.module.css";
 
+import FileUploader from "@/components/FileUploader";
+import Balance from "@/components/Balance";
+
 export default function Home() {
   return (
     <main className={styles.main}>
@@ -11,27 +14,9 @@ export default function Home() {
       {/* Uploader section */}
       <div className={styles.container}>
         <div className={styles.topSection}>
-          <div className={styles.containerUploader}>
-            <div className={styles.uploadArea}>
-              <input
-                type="file"
-                accept=".csv"
-                className={styles.fileInput}
-              />
-              <button
-                className={styles.uploadButton}
-              >
-                Choose CSV File
-              </button>
-            </div>
-          </div>
+          <FileUploader />
 
-          <div className={styles.containerBalance}>
-            <h2 className={styles.titleBalance}>Balance</h2>
-            <div className={styles.balanceValue}>
-              Rp 10.000.000
-            </div>
-          </div>
+          <Balance />
         </div>
       </div>
     </main>
